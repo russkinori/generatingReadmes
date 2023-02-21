@@ -73,6 +73,24 @@ await inquirer
         }
         tableOfContents += '* [License](#license)\n';
 
+        // create the badge for the chosen license
+        let licenseBadge = '';
+        switch (response.license) {
+            case 'MIT':
+                licenseBadge = '![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)';
+                break;
+            case 'GNU GPLv3':
+                licenseBadge = '![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)';
+                break;
+            case 'Apache 2.0':
+                licenseBadge = '![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)';
+                break;
+            case 'ISC':
+                licenseBadge = '![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)';
+                break;
+            default:
+                break;
+        }
 
         let readMeTxt =
             `
