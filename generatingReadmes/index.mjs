@@ -6,19 +6,57 @@ let { description, license, usage } = await inquirer
 
         {
             type: 'input',
-            name: 'description',
-            message: "Write a description?",
+            message: 'What is the title of your project?',
+            name: 'title',
         },
+
         {
             type: 'input',
-            name: 'usage',
-            message: "Ouline the usage?",
+            message: 'Please enter a description',
+            name: 'description',
         },
+
+        {
+            type: 'input',
+            message: 'What are the installation instructions:',
+            name: 'installation',
+        },
+
+        {
+            type: 'input',
+            message: 'Please enter usage information:',
+            name: 'usage',
+        },
+
+        {
+            type: 'input',
+            message: 'Please enter contribution guidelines:',
+            name: 'contributing',
+        },
+
+        {
+            type: 'input',
+            message: 'Please enter test instructions:',
+            name: 'tests',
+        },
+
+        {
+            type: 'input',
+            message: 'What is your GitHub username?',
+            name: 'github',
+        },
+
+        {
+            type: 'input',
+            message: 'What is your email address?',
+            name: 'email',
+        },
+
         {
             type: 'list',
             name: 'license',
             message: "What license do you want?",
-            choices: ['Apache', 'MIT', 'Pearl'],
+            choices: ['Apache 2.0', 'MIT', 'Pearl', 'GNU GPLv3',],
             filter(val) {
                 return val.toLowerCase();
             },
