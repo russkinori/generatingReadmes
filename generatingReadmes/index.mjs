@@ -82,6 +82,10 @@ inquirer.prompt([
 
 ${response.description}
 
+## Issues
+
+${response.issues}
+
 ## Table of Contents
 - [Description](#description)
 - [Issues](#issues)
@@ -104,6 +108,10 @@ ${response.usage}
 ## Contributing
 
 ${response.contributing}
+
+## Credits
+
+${response.credits}
 
 ## Tests
 
