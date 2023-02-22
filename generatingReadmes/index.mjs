@@ -1,121 +1,116 @@
 import inquirer from "inquirer";
 import fs from "fs/promises";
 
-await inquirer
-    .prompt([
-        {
-            type: 'input',
-            message: 'What is the title of your project?',
-            name: 'title',
-        },
-        {
-            type: 'input',
-            message: 'Please enter a description',
-            name: 'description',
-        },
-        {
-            type: 'input',
-            message: 'What are the installation instructions:',
-            name: 'installation',
-        },
-        {
-            type: 'input',
-            message: 'Please enter usage information:',
-            name: 'usage',
-        },
-        {
-            type: 'input',
-            message: 'Please enter contribution guidelines:',
-            name: 'contributing',
-        },
-        {
-            type: 'input',
-            message: 'Please enter test instructions:',
-            name: 'tests',
-        },
-        {
-            type: 'input',
-            message: 'What is your GitHub username?',
-            name: 'github',
-        },
-        {
-            type: 'input',
-            message: 'What is your email address?',
-            name: 'email',
-        },
-        {
-            type: 'list',
-            message: 'Please choose a license for your project:',
-            name: 'license',
-            choices: ['MIT', 'GNU GPLv3', 'Apache 2.0', 'ISC'],
-        },
-    ])
-    .then((response) => {
-        // create the Table of Contents
-        let tableOfContents = '';
-        if (response.description) {
-            tableOfContents += '* [Description](#description)\n';
-        }
-        if (response.installation) {
-            tableOfContents += '* [Installation](#installation)\n';
-        }
-        if (response.usage) {
-            tableOfContents += '* [Usage](#usage)\n';
-        }
-        if (response.contributing) {
-            tableOfContents += '* [Contributing](#contributing)\n';
-        }
-        if (response.tests) {
-            tableOfContents += '* [Tests](#tests)\n';
-        }
-        if (response.questions) {
-            tableOfContents += '* [Questions](#questions)\n';
-        }
-        tableOfContents += '* [License](#license)\n';
+// License badges
+const licenseBadge = {
+    'MIT': 'https://img.shields.io/badge/License-MIT-yellow.svg',
+    'Apache 2.0': 'https://img.shields.io/badge/License-Apache%202.0-blue.svg',
+    'GPLv3': 'https://img.shields.io/badge/License-GPLv3-blue.svg',
+    'Pearl': 'https://img.shields.io/badge/License-Perl-0298c3.svg',
+    'BSD 3': 'https://img.shields.io/badge/License-BSD%203--Clause-blue.svg',
+};
 
-        // create the badge for the chosen license
-        let licenseBadge = '';
-        switch (response.license) {
-            case 'MIT':
-                licenseBadge = '![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)';
-                break;
-            case 'GNU GPLv3':
-                licenseBadge = '![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)';
-                break;
-            case 'Apache 2.0':
-                licenseBadge = '![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)';
-                break;
-            case 'ISC':
-                licenseBadge = '![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)';
-                break;
-            default:
-                break;
-        }
+// Prompt for user input
+inquirer.prompt([
+    {
+        type: 'input',
+        name: 'title',
+        message: 'Enter the project title:'
+    },
+    {
+        type: 'input',
+        name: 'description',
+        message: 'Enter a description of the project:'
+    },
+    {
+        type: 'input',
+        name: 'installation',
+        message: 'Enter installation instructions:'
+    },
+    {
+        type: 'input',
+        name: 'usage',
+        message: 'Enter usage information:'
+    },
+    {
+        type: 'input',
+        name: 'contributing',
+        message: 'Enter contribution guidelines:'
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'Enter test instructions:'
+    },
+    {
+        type: 'list',
+        name: 'license',
+        message: 'Choose a license for your application:',
+        choices: ['MIT', 'Apache 2.0', 'GPLv3', 'BSD 3']
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Enter your GitHub username:'
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Enter your email address:'
+    }
+]).then(response => {
+    // Generate README content
+    const readmeContent = `
+# ${response.title}
 
-        // create the README content
-        let readmeContent = '';
-        readmeContent += `# ${response.title}\n\n`;
-        if (response.description) {
-            readmeContent += `## Description\n\n${response.description}\n\n`;
+![License](${licenseBadge[response.license]})
+
+## Description
+
+${response.description}
+
+## Table of Contents
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [License](#license)
+- [Questions](#questions)
+
+## Installation
+
+${response.installation}
+
+## Usage
+
+${response.usage}
+
+## Contributing
+
+${response.contributing}
+
+## Tests
+
+${response.tests}
+
+## License
+
+This project is licensed under the ${response.license} license. See the [LICENSE](LICENSE) file for details.
+
+## Questions
+
+If you have any questions or suggestions, please feel free to contact me at ${response.email}. You can also follow me on GitHub at [${response.github}](https://github.com/${response.github}).
+  `;
+
+    // Write README file
+    fs.writeFile('README.md', readmeContent, err => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('README.md file generated successfully!');
         }
-        readmeContent += `## Table of Contents\n\n${tableOfContents}\n\n`;
-        if (response.installation) {
-            readmeContent += `## Installation\n\n${response.installation}\n\n`;
-        }
-        if (response.usage) {
-            readmeContent += `## Usage\n\n${response.usage}\n\n`;
-        }
-        if (response.contributing) {
-            readmeContent += `## Contributing\n\n${response.contributing}\n\n`;
-        }
-        if (response.tests) {
-            readmeContent += `## Tests\n\n${response.tests}\n\n`;
-        }
-        if (response.tests) {
-            readmeContent += `## Questions\n\n${response.questions}\n\n`;
-        }
-        if (licenseBadge) {
-            readmeContent += `## License\n\n${licenseBadge}\n\n`;
-        }
-        fs.writeFile("README.md", readmeContent)
     });
+}).catch(error => {
+    console.error(error);
+});
