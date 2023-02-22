@@ -92,40 +92,30 @@ await inquirer
                 break;
         }
 
-        let readMeTxt =
-            `
-# Title
-
-## Description
-
-## Table of Contents
-
-## Installation
-
-## Usage
-
-## License
-${licenseGenerator(license)}
-
-## Contributing
-
-## Tests
-
-## Questions
-`
-
-        fs.writeFile("README.md", readMeTxt)
-
-
-        function licenseGenerator(license) {
-            if (license === "Apache") {
-                return "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)"
-            } else if (license === "MIT") {
-                return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"
-            } else if (license === "Pearl") {
-                return "[![License: Artistic-2.0](https://img.shields.io/badge/License-Perl-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)"
-            } else if (license === "GNU") {
-                return "![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)"
-            }
-
+        // create the README content
+        let readmeContent = '';
+        readmeContent += `# ${response.title}\n\n`;
+        if (response.description) {
+            readmeContent += `## Description\n\n${response.description}\n\n`;
         }
+        readmeContent += `## Table of Contents\n\n${tableOfContents}\n\n`;
+        if (response.installation) {
+            readmeContent += `## Installation\n\n${response.installation}\n\n`;
+        }
+        if (response.usage) {
+            readmeContent += `## Usage\n\n${response.usage}\n\n`;
+        }
+        if (response.contributing) {
+            readmeContent += `## Contributing\n\n${response.contributing}\n\n`;
+        }
+        if (response.tests) {
+            readmeContent += `## Tests\n\n${response.tests}\n\n`;
+        }
+        if (response.tests) {
+            readmeContent += `## Questions\n\n${response.questions}\n\n`;
+        }
+        if (licenseBadge) {
+            readmeContent += `## License\n\n${licenseBadge}\n\n`;
+        }
+        fs.writeFile("README.md", readmeContent)
+    });

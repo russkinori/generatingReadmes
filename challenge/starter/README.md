@@ -1,8 +1,8 @@
-# test
+# ts
 
 ## Description
 
-testing 
+te
 
 ## Table of Contents
 
@@ -14,19 +14,19 @@ testing
 
 ## Installation
 
-tester
+ts
 
 ## Usage
 
-tested
+tes
 
 ## Contributing
 
-tests
+tsd
 
 ## Tests
 
-testers
+tsd
 
 ## Questions
 
@@ -34,5 +34,5 @@ undefined
 
 ## License
 
-![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
